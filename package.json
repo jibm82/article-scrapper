@@ -1,0 +1,26 @@
+{
+  "name": "medium-scrapper",
+  "version": "1.0.0",
+  "description": "News scrapper web app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jibm82/medium-scrapper.git"
+  },
+  "author": "Jorge Baez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jibm82/medium-scrapper/issues"
+  },
+  "homepage": "https://github.com/jibm82/medium-scrapper#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.4.4"
+  }
+}
