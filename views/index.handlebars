@@ -1,0 +1,26 @@
+<div class="grid">
+  <div class="grid-sizer"></div>
+  {{#each articles}}
+  <div class="grid-item">
+    <div class="card">
+      <a href="{{url}}">
+        <img src="{{image}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{title}}</h5>
+          <p class="card-text">{{summary}}</p>
+          <p class="card-text"><small class="text-muted">{{published_date}}</small></p>
+        </div>
+      </a>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+<script>
+  $('.grid').masonry({
+    // options
+    itemSelector: '.grid-item',
+    columnWidth: '.grid-sizer',
+    percentPosition: true
+  });
+</script>
