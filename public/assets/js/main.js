@@ -9,19 +9,17 @@ $(document).ready(() => {
     $grid.masonry("layout");
   });
 
-  $(document).on("click", ".article a", function(e) {
+  $(document).on("click", ".favorite-toggler", function(e) {
     e.preventDefault();
-    const id = $(this)
-      .closest(".article")
-      .data("id");
-    $.post(
-      "/api/articles/favourite",
-      {
-        id
-      },
-      response => {
-        console.log(response);
-      }
-    );
+    const trigger = $(this);
+    const icon = trigger.find("i");
+    const favorite = trigger.data("favorite");
+    const id = trigger.data("id");
+    const method = favorite ? "unfavourite" : "favourite";
+
+    $.post(`/api/articles/${method}`, { id }, response => {
+      trigger.data("favorite", !favorite);
+      icon.toggleClass("fa").toggleClass("far");
+    });
   });
 });

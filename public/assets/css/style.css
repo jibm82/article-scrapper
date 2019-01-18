@@ -18,11 +18,19 @@ h3 {
   width: 100%;
 }
 
-.article {
+.article-header {
+  position: relative;
+  padding: 0px 20px;
 }
 
-.article-header {
-  padding: 0px 20px;
+.article-header .favorite-toggler {
+  color: red;
+  font-size: 20px;
+  position: absolute;
+  line-height: 20px;
+  top: 0px;
+  right: 0px;
+  padding: 0px;
 }
 
 .article .article-publish-date {

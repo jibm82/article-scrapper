@@ -1,5 +1,8 @@
-<div class="article" data-id="{{id}}">
+<div class="article">
   <div class="article-header">
+    <button class="btn btn-link favorite-toggler" data-id="{{id}}" data-favorite="{{favorite}}">
+      <i class="{{#if favorite}}fa{{else}}far{{/if}} fa-heart"></i>
+    </button>
     <h4 class="article-publish-date">{{publish_date}}</h4>
     <h3 class="article-title">{{title}}</h3>
   </div>
