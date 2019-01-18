@@ -1,6 +1,8 @@
 <div class="articles">
   <div class="article-sizer"></div>
   {{#each articles}}
-    {{> article}}
+    {{#if favorite}}
+      {{> article}}
+    {{/if}}
   {{/each}}
 </div>
