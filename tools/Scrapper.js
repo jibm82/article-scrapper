@@ -1,6 +1,7 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
-const URL_FOR_SCRAPPING = "https://www.esquire.com/";
+const moment = require("moment");
+const URL_FOR_SCRAPPING = "https://www.newyorker.com/latest";
 
 class Scrapper {
   static perform() {
@@ -11,58 +12,80 @@ class Scrapper {
     return new Promise((resolve, reject) => {
       axios.get(URL_FOR_SCRAPPING).then(response => {
         const $ = cheerio.load(response.data);
-        let results = [];
+        let articles = [];
+        $(".River__list___2_45v li").each((i, article) => {
+          articles.push(this.articleData($(article)));
+        });
 
-        $(".full-item").each((i, item) => results.push(this.result($(item))));
-
-        resolve(results);
+        resolve(articles);
       });
     });
   }
 
-  result(item) {
+  articleData(article) {
     return {
-      author: this.author(item),
-      author_url: this.author_url(item),
-      image: this.image(item),
-      publish_date: this.publish_date(item),
-      summary: this.summary(item),
-      title: this.title(item),
-      url: this.url(item)
+      author: this.author(article),
+      author_url: this.author_url(article),
+      image: this.image(article),
+      publish_date: this.publish_date(article),
+      summary: this.summary(article),
+      title: this.title(article),
+      url: this.url(article)
     };
   }
 
-  author(item) {
-    return cleanText(item.find("span.byline-name").text());
+  author(article) {
+    return cleanText(
+      article.find(".Byline__by___37lv8 a.Link__link___3dWao  ").text()
+    );
   }
 
-  author_url(item) {
-    return item.find("a.byline-name").attr("href");
+  author_url(article) {
+    return fullUrl(
+      article.find(".Byline__by___37lv8 a.Link__link___3dWao  ").attr("href")
+    );
   }
 
-  image(item) {
-    return item.find(".lazyimage").attr("data-src");
+  image(article) {
+    const srcset = article.find("picture source:nth-child(2)").attr("srcset");
+
+    return srcset.split(" ")[0];
   }
 
-  publish_date(item) {
-    return item.find(".publish-date").attr("data-publish-date");
+  publish_date(article) {
+    let date = moment(article.find("h6").text());
+
+    if (!date.isValid()) {
+      date = moment();
+    }
+
+    return date.format();
   }
 
-  summary(item) {
-    return cleanText(item.find(".item-title").text());
+  summary(article) {
+    return cleanText(article.find("h5").text());
   }
 
-  title(item) {
-    return cleanText(item.find(".item-title").text());
+  title(article) {
+    return cleanText(article.find("h4").text());
   }
 
-  url(item) {
-    return item.find("a").attr("href");
+  url(article) {
+    return fullUrl(
+      article
+        .find("h4")
+        .parent()
+        .attr("href")
+    );
   }
 }
 
 function cleanText(text) {
   return text.replace(/[\r\n\t]/g, "").trim();
+}
+
+function fullUrl(url) {
+  return `${URL_FOR_SCRAPPING}${url}`;
 }
 
 module.exports = Scrapper;
