@@ -2,6 +2,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const moment = require("moment");
 const URL_FOR_SCRAPPING = "https://www.newyorker.com/latest";
+const db = require("../models");
 
 class Scrapper {
   static perform() {
@@ -10,15 +11,31 @@ class Scrapper {
 
   perform() {
     return new Promise((resolve, reject) => {
-      axios.get(URL_FOR_SCRAPPING).then(response => {
-        const $ = cheerio.load(response.data);
-        let articles = [];
-        $(".River__list___2_45v li").each((i, article) => {
-          articles.push(this.articleData($(article)));
-        });
+      axios
+        .get(URL_FOR_SCRAPPING)
+        .then(response => {
+          const $ = cheerio.load(response.data);
+          const articles = [];
 
-        resolve(articles);
-      });
+          $(".River__list___2_45v li").each((i, article) => {
+            articles.push(this.articleData($(article)));
+          });
+
+          db.Article.insertMany(
+            articles,
+            { ordered: false },
+            (err, newArticles) => {
+              if (err) {
+                reject(err);
+              }
+
+              resolve(articles);
+            }
+          );
+        })
+        .catch(err => {
+          reject(err);
+        });
     });
   }
 
