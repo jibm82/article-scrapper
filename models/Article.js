@@ -14,7 +14,8 @@ const ArticleSchema = new Schema({
     required: true
   },
   publish_date: {
-    type: Date
+    type: Date,
+    get: value => value.toDateString()
   },
   summary: {
     type: String

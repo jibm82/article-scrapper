@@ -1,8 +1,12 @@
 $(document).ready(() => {
-  $(".articles").masonry({
+  let $grid = $(".articles").masonry({
     itemSelector: ".article",
     columnWidth: ".article-sizer",
     percentPosition: true
+  });
+
+  $grid.imagesLoaded().progress(() => {
+    $grid.masonry("layout");
   });
 
   $(document).on("click", ".article a", function(e) {

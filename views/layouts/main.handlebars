@@ -15,12 +15,25 @@
   <header>
     <nav class="navbar navbar-expand-md navbar-light bg-white absolute-top">
       <div class="container">
-        <h1><span>Article Scrapper - The New Yorker Edition<span></h1>
+        <button class="navbar-toggler order-2 order-md-1" type="button" data-toggle="collapse" data-target="#navbar"
+          aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse order-3 order-md-2" id="navbar">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item {{#if home}}active{{/if}}">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item {{#unless home}}active{{/unless}}">
+              <a class="nav-link" href="/favorites">Favorites </a> </li>
+          </ul>
+        </div> <a class="navbar-brand mr-auto order-1 order-md-2" href="/">Scrapper</a>
       </div>
     </nav>
   </header>
   <main role="main">
-    <div class="container">
+    <div class="container-fluid">
       {{{ body }}}
     </div>
   </main>
@@ -31,6 +44,7 @@
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
   <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
   <script src="/assets/js/main.js"></script>
 
 </body>

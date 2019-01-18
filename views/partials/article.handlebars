@@ -1,12 +1,12 @@
 <div class="article" data-id="{{id}}">
-  <div class="card shadow-sm">
-    <a href="{{url}}">
-      <img src="{{image}}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">{{title}}</h5>
-        <p class="card-text">{{summary}}</p>
-        <p class="card-text"><small class="text-muted">{{published_date}}</small></p>
-      </div>
-    </a>
+  <div class="article-header">
+    <h4 class="article-publish-date">{{publish_date}}</h4>
+    <h3 class="article-title">{{title}}</h3>
+  </div>
+  <a href="{{url}}">
+    <img src="{{image}}" class="img-fluid" alt="Image for {{title}}">
+  </a>
+  <div class="article-summary">
+    {{summary}}
   </div>
 </div>

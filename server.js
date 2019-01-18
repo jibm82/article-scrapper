@@ -21,7 +21,7 @@ app.set("view engine", "handlebars");
 
 app.get("/", (req, res) => {
   db.Article.find({})
-    .then(articles => res.render("index", { articles }))
+    .then(articles => res.render("index", { articles, home: true }))
     .catch(err => {
       console.log(err);
       res.render("index", { articles: [] });
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 
 app.get("/favorites", (req, res) => {
   db.Article.find({ favorite: true })
-    .then(articles => res.render("index", { articles }))
+    .then(articles => res.render("index", { articles, home: false }))
     .catch(err => {
       console.log(err);
       res.render("index", { articles: [] });

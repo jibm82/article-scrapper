@@ -64,9 +64,14 @@ class Scrapper {
   }
 
   image(article) {
-    const srcset = article.find("picture source:nth-child(2)").attr("srcset");
+    const srcArray = article
+      .find("img")
+      .attr("src")
+      .split("/");
+    const id = srcArray[4];
+    const name = srcArray[7];
 
-    return srcset.split(" ")[0];
+    return `https://media.newyorker.com/photos/${id}/master/w_600/${name}`;
   }
 
   publish_date(article) {
