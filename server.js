@@ -47,7 +47,23 @@ app.get("/scrape", (req, res) => {
 });
 
 app.post("/api/articles/favourite", (req, res) => {
-  res.json(req.body.id);
+  db.Article.updateOne({ _id: req.body.id }, { $set: { favorite: true } })
+    .then(result => {
+      res.json(result);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+
+app.post("/api/articles/unfavourite", (req, res) => {
+  db.Article.updateOne({ _id: req.body.id }, { $set: { favorite: false } })
+    .then(result => {
+      res.json(result);
+    })
+    .catch(err => {
+      res.json(err);
+    });
 });
 
 app.listen(PORT, () => {
