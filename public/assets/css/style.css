@@ -1,11 +1,20 @@
 @import url("https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700|PT+Serif:700");
 
 body {
+  padding-top: 58px;
   font-family: "PT Sans Caption", sans-serif;
 }
 
 h3 {
   font-family: "PT Serif", serif;
+}
+
+header {
+  background: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }
 
 .navbar {
