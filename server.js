@@ -37,6 +37,10 @@ app.get("/scrape", (req, res) => {
     });
 });
 
+app.post("/api/articles/favourite", (req, res) => {
+  res.json(req.body.id);
+});
+
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
 });

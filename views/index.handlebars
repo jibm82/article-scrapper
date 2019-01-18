@@ -1,15 +1,16 @@
-<div class="grid">
-  <div class="grid-sizer"></div>
+<div class="articles">
+  <div class="article-sizer"></div>
   {{#each articles}}
   {{> article}}
   {{/each}}
 </div>
 
 <script>
-  $('.grid').masonry({
-    // options
-    itemSelector: '.grid-item',
-    columnWidth: '.grid-sizer',
-    percentPosition: true
+  $(document).ready(() => {
+    $('.articles').masonry({
+      itemSelector: '.article',
+      columnWidth: '.article-sizer',
+      percentPosition: true
+    });
   });
 </script>
