@@ -28,6 +28,15 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("/favorites", (req, res) => {
+  db.Article.find({ favorite: true })
+    .then(articles => res.render("index", { articles }))
+    .catch(err => {
+      console.log(err);
+      res.render("index", { articles: [] });
+    });
+});
+
 app.get("/scrape", (req, res) => {
   Scrapper.perform()
     .then(articles => res.json({ articles: articles }))
