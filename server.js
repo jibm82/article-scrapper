@@ -1,18 +1,21 @@
-const express = require("express");
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapper";
 const PORT = process.env.PORT || 3000;
-const app = express();
+
+const express = require("express");
 const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 
 const db = require("./models");
 const Scrapper = require("./tools/Scrapper");
 
+const app = express();
+
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 mongoose.connect(
-  "mongodb://localhost/unit18Populater",
+  MONGODB_URI,
   { useNewUrlParser: true }
 );
 
