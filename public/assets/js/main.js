@@ -22,4 +22,26 @@ $(document).ready(() => {
       icon.toggleClass("fa").toggleClass("far");
     });
   });
+
+  $(document).on("click", ".scrappe", function(e) {
+    e.preventDefault();
+    const trigger = $(this);
+    if (!trigger.hasClass("disabled")) {
+      $(".scrappe").addClass("disabled");
+      $.get(`/scrappe`, response => {
+        if (response.articles & (response.articles.length > 0)) {
+          window.location.reload();
+        } else {
+          Swal("Scrapping completed", "There are no new articles", "info");
+        }
+      }).always(() => {
+        $(".scrappe").removeClass("disabled");
+      });
+    }
+  });
+
+  $(document).on("click", "img", function(e) {
+    e.preventDefault();
+    Swal("h");
+  });
 });

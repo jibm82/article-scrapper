@@ -37,7 +37,7 @@ app.get("/favorites", (req, res) => {
     });
 });
 
-app.get("/scrape", (req, res) => {
+app.get("/scrappe", (req, res) => {
   Scrapper.perform()
     .then(articles => res.json({ articles: articles }))
     .catch(err => {

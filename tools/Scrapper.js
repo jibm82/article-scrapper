@@ -28,8 +28,7 @@ class Scrapper {
               if (err) {
                 reject(err);
               }
-
-              resolve(articles);
+              resolve(newArticles);
             }
           );
         })
