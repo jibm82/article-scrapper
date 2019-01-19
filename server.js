@@ -69,16 +69,11 @@ app.post("/api/articles/unfavourite", (req, res) => {
 app.post("/api/articles/:id/notes", (req, res) => {
   db.Article.findOne({ _id: req.params.id })
     .then(article => {
-      console.log(req.params.id);
-      console.log("found", article);
       if (!article) {
         res.status(404).json({ error: "Article not found" });
       }
 
-      db.Note.create({
-        article: article.id,
-        body: req.body.body
-      })
+      db.Note.create({ article: article.id, content: req.body.content })
         .then(note => {
           res.json(note);
         })
