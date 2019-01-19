@@ -79,10 +79,49 @@ header {
   display: block;
 }
 
+.article .article-footer {
+  border-bottom: 1px solid #ddd;
+  padding: 15px;
+}
+
 .article .article-summary {
   font-size: 0.9em;
-  padding: 25px;
+  margin-bottom: 20px;
+}
+
+.article-notes {
+  padding: 10px 0px;
+}
+
+.article-notes-body.collapsing {
+  visibility: hidden;
+}
+
+.article-note {
   border-bottom: 1px solid #ddd;
+  font-size: 0.8em;
+  padding: 5px;
+  position: relative;
+}
+
+.article-note p {
+  margin-bottom: 0px;
+  padding-right: 25px;
+}
+
+.article-note .remove {
+  color: #ddd;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+.article-note .remove:hover {
+  color: #bbb;
+}
+
+.article-note:last-child {
+  border-bottom: 0;
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

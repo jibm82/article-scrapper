@@ -2,25 +2,12 @@ $(document).ready(() => {
   let $grid = $(".articles").masonry({
     itemSelector: ".article",
     columnWidth: ".article-sizer",
-    percentPosition: true
+    percentPosition: true,
+    horizontalOrder: true
   });
 
   $grid.imagesLoaded().progress(() => {
     $grid.masonry("layout");
-  });
-
-  $(document).on("click", ".favorite-toggler", function(e) {
-    e.preventDefault();
-    const trigger = $(this);
-    const icon = trigger.find("i");
-    const favorite = trigger.data("favorite");
-    const id = trigger.data("id");
-    const method = favorite ? "unfavourite" : "favourite";
-
-    $.post(`/api/articles/${method}`, { id }, response => {
-      trigger.data("favorite", !favorite);
-      icon.toggleClass("fa").toggleClass("far");
-    });
   });
 
   $(document).on("click", ".scrappe", function(e) {
@@ -44,8 +31,76 @@ $(document).ready(() => {
     }
   });
 
-  $(document).on("click", "img", function(e) {
+  $(document).on("click", ".favorite-toggler", function(e) {
     e.preventDefault();
-    Swal("h");
+    const trigger = $(this);
+    const icon = trigger.find("i");
+    const favorite = trigger.data("favorite");
+    const id = trigger.data("id");
+    const method = favorite ? "unfavourite" : "favourite";
+
+    $.post(`/api/articles/${method}`, { id }, response => {
+      trigger.data("favorite", !favorite);
+      icon.toggleClass("fa").toggleClass("far");
+    });
   });
+
+  $(document).on("submit", ".new-note", function(e) {
+    e.preventDefault();
+    const $form = $(this);
+    const articleId = $form.data("id");
+    const content = $(this)
+      .find("input")
+      .val()
+      .trim();
+
+    if (!$form.hasClass(".disabled") && content !== "") {
+      $form.addClass("disabled");
+
+      $.post(`/api/articles/${articleId}/notes`, { content }, response => {
+        renderNewNote(articleId, response);
+        updateNotesTogglerText(articleId);
+        $form.find("input").val("");
+      }).always(() => {
+        $form.removeClass("disabled");
+      });
+    }
+  });
+
+  $(document).on("shown.bs.collapse", ".article-notes-body", function(e) {
+    $grid.masonry("layout");
+  });
+
+  $(document).on("hidden.bs.collapse", ".article-notes-body", function(e) {
+    $grid.masonry("layout");
+  });
+
+  function renderNewNote(articleId, noteData) {
+    const $notes = $(`#article-notes-body-${articleId}`).find(".article-notes");
+    const $note = $("<div>", {
+      class: "article-note",
+      "data-id": noteData._id
+    });
+
+    $note.append($("<p>").text(noteData.content));
+
+    const $button = $("<button>", { class: "btn btn-link btn-sm remove" });
+    $button.append($("<i>", { class: "fa fa-trash" }));
+    $note.append($button);
+
+    $notes.append($note);
+    $grid.masonry("layout");
+  }
+
+  function updateNotesTogglerText(articleId) {
+    const $toggler = $(`#notes-toggler-${articleId}`);
+    const $notes = $(`#article-notes-body-${articleId}`).find(".article-notes");
+    const notesCount = $notes.find(".article-note").length;
+
+    if (notesCount > 0) {
+      $toggler.text(`Notes (${notesCount})`);
+    } else {
+      $toggler.text("Add a note");
+    }
+  }
 });

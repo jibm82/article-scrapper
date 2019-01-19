@@ -1,4 +1,4 @@
-<div class="article">
+<article class="article">
   <div class="article-header">
     <button class="btn btn-link favorite-toggler" data-id="{{id}}" data-favorite="{{favorite}}">
       <i class="{{#if favorite}}fa{{else}}far{{/if}} fa-heart"></i>
@@ -14,7 +14,31 @@
   <a href="{{url}}">
     <img src="{{image}}" class="img-fluid" alt="Image for {{title}}">
   </a>
-  <div class="article-summary">
-    {{summary}}
-  </div>
-</div>
+  <div class="article-footer">
+    <div class="article-summary">
+      {{summary}}
+    </div>
+    <div class="article-notes-wrapper">
+      <button id="notes-toggler-{{id}}" class="btn btn-info btn-sm notes-toggler" type="button" data-toggle="collapse"
+        data-target="#article-notes-body-{{id}}" aria-expanded="false" aria-controls="article-notes-body-{{id}}">
+        {{#if notes.length}}
+          Notes ({{notes.length}})
+        {{else}}
+          Add a note
+        {{/if}}
+      </button>
+      <div id="article-notes-body-{{id}}" class="article-notes-body collapse">
+        <div class="article-notes">
+          {{#each notes}}
+            <div class="article-note" data-id="{{id}}">
+              <p>{{content}}</p>
+              <button class="btn btn-link btn-sm remove"><i class="fa fa-trash"></i></button>
+            </div>
+          {{/each}}
+        </div>
+        <form class="new-note" data-id="{{id}}">
+          <input type="text" name="content" class="form-control input-sm" placeholder="Add a note...">
+        </form>
+      </div>
+    </div>
+</article>
