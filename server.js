@@ -21,6 +21,7 @@ app.set("view engine", "handlebars");
 
 app.get("/", (req, res) => {
   db.Article.find({})
+    .populate("notes")
     .then(articles => res.render("index", { articles, home: true }))
     .catch(err => {
       console.log(err);
@@ -43,6 +44,16 @@ app.get("/scrappe", (req, res) => {
     .catch(err => {
       console.log(err);
       res.json({ error: err });
+    });
+});
+
+app.get("/api/articles", (req, res) => {
+  db.Article.find({})
+    .populate("notes")
+    .then(articles => res.json(articles))
+    .catch(err => {
+      console.log(err);
+      res.render("index", { articles: [] });
     });
 });
 
@@ -75,7 +86,15 @@ app.post("/api/articles/:id/notes", (req, res) => {
 
       db.Note.create({ article: article.id, content: req.body.content })
         .then(note => {
-          res.json(note);
+          article.notes.push(note);
+          article
+            .save()
+            .then(() => {
+              res.json(note);
+            })
+            .catch(err => {
+              res.status(500).json({ error: err.message });
+            });
         })
         .catch(err => {
           res.status(422).json({ error: err.message });
