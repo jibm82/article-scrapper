@@ -4,7 +4,12 @@
       <i class="{{#if favorite}}fa{{else}}far{{/if}} fa-heart"></i>
     </button>
     <h4 class="article-publish-date">{{publish_date}}</h4>
-    <h3 class="article-title">{{title}}</h3>
+    <h3 class="article-title">
+      {{title}}
+      <small>
+        by <a href="{{author_url}}" target="_blank">{{author}}</a>
+      </small>
+    </h3>
   </div>
   <a href="{{url}}">
     <img src="{{image}}" class="img-fluid" alt="Image for {{title}}">

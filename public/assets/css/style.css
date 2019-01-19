@@ -61,6 +61,9 @@ header {
   font-size: 1.3125rem;
   margin-bottom: 15px;
 }
+.article .article-title small {
+  display: block;
+}
 
 .article .article-summary {
   font-size: 0.9em;
