@@ -1,7 +1,8 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 const moment = require("moment");
-const URL_FOR_SCRAPPING = "https://www.newyorker.com/latest";
+const MAIN_URL = "https://www.newyorker.com";
+const SCRAPPING_URL = `${MAIN_URL}/latest`;
 const db = require("../models");
 
 class Scrapper {
@@ -12,7 +13,7 @@ class Scrapper {
   perform() {
     return new Promise((resolve, reject) => {
       axios
-        .get(URL_FOR_SCRAPPING)
+        .get(SCRAPPING_URL)
         .then(response => {
           const $ = cheerio.load(response.data);
           const articles = [];
@@ -106,7 +107,7 @@ function cleanText(text) {
 }
 
 function fullUrl(url) {
-  return `${URL_FOR_SCRAPPING}${url}`;
+  return `${MAIN_URL}${url}`;
 }
 
 module.exports = Scrapper;
