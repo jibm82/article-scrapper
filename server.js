@@ -62,7 +62,45 @@ app.post("/api/articles/unfavourite", (req, res) => {
       res.json(result);
     })
     .catch(err => {
-      res.json(err);
+      res.json({ error: err.message });
+    });
+});
+
+app.post("/api/articles/:id/notes", (req, res) => {
+  db.Article.findOne({ _id: req.params.id })
+    .then(article => {
+      console.log(req.params.id);
+      console.log("found", article);
+      if (!article) {
+        res.status(404).json({ error: "Article not found" });
+      }
+
+      db.Note.create({
+        article: article.id,
+        body: req.body.body
+      })
+        .then(note => {
+          res.json(note);
+        })
+        .catch(err => {
+          res.status(422).json({ error: err.message });
+        });
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+});
+
+app.delete("/api/notes/:id", (req, res) => {
+  db.Note.findOneAndRemove({ _id: req.params.id })
+    .then(note => {
+      if (!note) {
+        res.status(404).json({ error: "Note not found" });
+      }
+      res.json(note);
+    })
+    .catch(err => {
+      res.status(400).json({ error: err.message });
     });
 });
 

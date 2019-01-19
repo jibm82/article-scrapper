@@ -4,10 +4,9 @@ const Schema = mongoose.Schema;
 
 const NoteSchema = new Schema({
   article: { type: Schema.Types.ObjectId, ref: "Article" },
-  body: {
+  content: {
     type: String,
-    unique: true,
-    required: true
+    required: [true, "You must provide content"]
   }
 });
 
