@@ -58,9 +58,23 @@ header {
 }
 
 .article .article-title {
-  font-size: 1.3125rem;
+  font-size: 1.2125rem;
   margin-bottom: 15px;
 }
+
+.article .article-title a {
+  color: #000;
+}
+
+.article .article-title a:hover {
+  text-decoration: none;
+}
+
+.article .article-title small a {
+  color: #007bff;
+  text-decoration: underline !important;
+}
+
 .article .article-title small {
   display: block;
 }
