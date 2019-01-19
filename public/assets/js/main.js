@@ -85,6 +85,9 @@ $(document).ready(() => {
   });
 
   $(document).on("shown.bs.collapse", ".article-notes-body", function(e) {
+    $(this)
+      .find("input")
+      .focus();
     $grid.masonry("layout");
   });
 
