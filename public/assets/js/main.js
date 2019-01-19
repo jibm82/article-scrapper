@@ -67,6 +67,23 @@ $(document).ready(() => {
     }
   });
 
+  $(document).on("click", ".remove", function(e) {
+    e.preventDefault();
+    const $trigger = $(this);
+    const $note = $(this).closest(".article-note");
+    const $notes = $(this).closest(".article-notes");
+    const articleId = $notes.data("id");
+    const noteId = $note.data("id");
+    const url = `/api/notes/${noteId}`;
+
+    $.ajax({ method: "DELETE", url }).done(function(response) {
+      console.log(response);
+      $trigger.closest(".article-note").remove();
+      updateNotesTogglerText(articleId);
+      $grid.masonry("layout");
+    });
+  });
+
   $(document).on("shown.bs.collapse", ".article-notes-body", function(e) {
     $grid.masonry("layout");
   });
