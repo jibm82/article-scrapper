@@ -31,6 +31,7 @@ app.get("/", (req, res) => {
 
 app.get("/favorites", (req, res) => {
   db.Article.find({ favorite: true })
+    .populate("notes")
     .then(articles => res.render("index", { articles, home: false }))
     .catch(err => {
       console.log(err);
